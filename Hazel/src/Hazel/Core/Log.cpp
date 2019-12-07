@@ -8,13 +8,12 @@ namespace Hazel {
 	Ref<spdlog::logger> Log::s_CoreLogger;
 	Ref<spdlog::logger> Log::s_ClientLogger;
 
-	void Log::Init()
-	{
+	void Log::Init(Ref<spdlog::logger> coreLogger, Ref<spdlog::logger> clientLogger) {
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		s_CoreLogger = spdlog::stdout_color_mt("HAZEL");
+		s_CoreLogger = std::move(coreLogger);
 		s_CoreLogger->set_level(spdlog::level::trace);
 
-		s_ClientLogger = spdlog::stdout_color_mt("APP");
+		s_ClientLogger = std::move(clientLogger);
 		s_ClientLogger->set_level(spdlog::level::trace);
 	}
 
