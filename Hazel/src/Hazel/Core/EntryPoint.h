@@ -19,17 +19,15 @@ extern Hazel::Application* Hazel::CreateApplication();
 int main(int argc, char** argv) {
 	Hazel::Log::Init();
 
-	std::filesystem::path binDirectory = std::filesystem::path(argv[0]).remove_filename();
-
-	HZ_PROFILE_BEGIN_SESSION("Startup", (binDirectory / "HazelProfile-Startup.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Startup.json");
 	auto app = Hazel::CreateApplication();
 	HZ_PROFILE_END_SESSION();
 
-	HZ_PROFILE_BEGIN_SESSION("Runtime", (binDirectory / "HazelProfile-Runtime.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Runtime", "HazelProfile-Runtime.json");
 	app->Run();
 	HZ_PROFILE_END_SESSION();
 
-	HZ_PROFILE_BEGIN_SESSION("Startup", (binDirectory / "HazelProfile-Shutdown.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Shutdown.json");
 	delete app;
 	HZ_PROFILE_END_SESSION();
 }
@@ -57,22 +55,15 @@ int wWinMain(
 	Hazel::Log::Init(spdlog::create<spdlog::sinks::null_sink_mt>("HAZEL"), spdlog::create<spdlog::sinks::null_sink_mt>("APP"));
 #endif
 
-#ifdef HZ_PROFILE
-	HMODULE hModule = GetModuleHandleW(nullptr);
-	TCHAR path[MAX_PATH];
-	GetModuleFileNameW(hModule, path, MAX_PATH);
-	std::filesystem::path binDirectory = std::filesystem::path(path).remove_filename();
-#endif
-
-	HZ_PROFILE_BEGIN_SESSION("Startup", (binDirectory / "HazelProfile-Startup.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Startup.json");
 	auto app = Hazel::CreateApplication();
 	HZ_PROFILE_END_SESSION();
 
-	HZ_PROFILE_BEGIN_SESSION("Runtime", (binDirectory / "HazelProfile-Runtime.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Runtime", "HazelProfile-Runtime.json");
 	app->Run();
 	HZ_PROFILE_END_SESSION();
 
-	HZ_PROFILE_BEGIN_SESSION("Startup", (binDirectory / "HazelProfile-Shutdown.json").string());
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Shutdown.json");
 	delete app;
 	HZ_PROFILE_END_SESSION();
 
