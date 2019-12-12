@@ -4,16 +4,17 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Hazel {
 
-	class Log
-	{
+	class Log {
 	public:
-		static void Init();
+		static void Init(Ref<spdlog::logger> coreLogger = spdlog::stdout_color_mt("HAZEL"), Ref<spdlog::logger> clientLogger = spdlog::stderr_color_mt("APP"));
 
-		inline static Ref<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-		inline static Ref<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		static Ref<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+		static Ref<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+
 	private:
 		static Ref<spdlog::logger> s_CoreLogger;
 		static Ref<spdlog::logger> s_ClientLogger;
