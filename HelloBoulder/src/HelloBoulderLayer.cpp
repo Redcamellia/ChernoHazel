@@ -173,7 +173,7 @@ HelloBoulderLayer::HelloBoulderLayer()
 , m_AccumulatedTs(0.0f)
 , m_PlayerIsAlive(false)
 , m_GamePaused(false)
-, m_CurrentLevel(4)
+, m_CurrentLevel(0)
 , m_WonLevel(false)
 {
 	m_ViewPort.SetCameraSpeed((1.0f / m_FixedTimestep) - 1.0f);
