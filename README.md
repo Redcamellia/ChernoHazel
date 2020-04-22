@@ -27,3 +27,23 @@ The plan for Hazel is two-fold: to create a powerful 3D engine, but also to serv
 - Procedural terrain and world generation
 - Artificial Intelligence
 - Audio system
+
+## This Fork
+This fork of the Hazel repo adds a sample application built with the Hazel engine.
+This is in the HelloBoulder subdirectory.
+
+HelloBoulder is a clone of the popular 1980's game [Boulder-Dash](https://boulder-dash.
+com).  The goal here was not to make the perfect boulder-dash clone, but rather just to demonstrate making a simple game with Hazel, in particular making use of the batched rendering of textured quads.
+
+Many other people have made Boulder-dash clones, in particular I relied on these two for tips on the game logic:
+- [Jake Gordon's remake in Javascript](https://codeincomplete.com/posts/javascript-boulderdash/)
+- [Czirkos Zoltán's GDash](https://bitbucket.org/czirkoszoltan/gdash/src/master/)
+
+### Instructions
+Move Rockford around with the WASD keys (or cursor keys).  Collect the diamonds and then make your way to the exit (flashing rectangle) to progress to next level.
+Do not get squashed by falling boulders, or exploded by nasties.
+If you drop boulders onto butterflies, they turn into diamonds.
+Press spacebar to restart if you die.
+
+In DEBUG build, things that will kill you are highlighted in red, plus you get imgui panel to configure various things.
+
