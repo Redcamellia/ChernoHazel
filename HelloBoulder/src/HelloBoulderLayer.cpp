@@ -208,6 +208,9 @@ void HelloBoulderLayer::OnUpdate(Hazel::Timestep ts) {
 		LoadLevel(++m_CurrentLevel);
 	}
 
+	Hazel::Renderer2D::ResetStats();
+	Hazel::Renderer2D::StatsBeginFrame();
+
 	// Update game level on fixed timestep
 	m_AccumulatedTs += ts;
 	if (m_AccumulatedTs > m_FixedTimestep) {
@@ -263,6 +266,7 @@ void HelloBoulderLayer::OnUpdate(Hazel::Timestep ts) {
 	}
 
 	Hazel::Renderer2D::EndScene();
+	Hazel::Renderer2D::StatsEndFrame();
 }
 
 void HelloBoulderLayer::OnEvent(Hazel::Event& e) {
@@ -294,13 +298,15 @@ void HelloBoulderLayer::LoadLevel(int level) {
 
 #ifdef _DEBUG
 void HelloBoulderLayer::OnImGuiRender() {
-	int updateFPS = (int)(1.0f / m_FixedTimestep);
-	ImGui::Begin("Game Settings");
-	ImGui::Text("Score: %d", m_Level.GetScore());
-	ImGui::DragInt("Movement FPS", &updateFPS, 1, 1, 60);
-	ImGui::End();
-	m_FixedTimestep = 1.0f / updateFPS;
-	m_ViewPort.SetCameraSpeed((1.0f / m_FixedTimestep) - 1.0f);
+	{
+		ImGui::Begin("Game Settings");
+		ImGui::Text("Score: %d", m_Level.GetScore());
+		int updateFPS = (int)(1.0f / m_FixedTimestep);
+		ImGui::DragInt("Movement FPS", &updateFPS, 1, 1, 60);
+		ImGui::End();
+		m_FixedTimestep = 1.0f / updateFPS;
+		m_ViewPort.SetCameraSpeed((1.0f / m_FixedTimestep) - 1.0f);
+	}
 
 	for (size_t row = 0; row < m_Level.GetHeight(); ++row) {
 		for (size_t col = 0; col < m_Level.GetWidth(); ++col) {
@@ -308,6 +314,21 @@ void HelloBoulderLayer::OnImGuiRender() {
 				m_Level.GetGameObject(row, col).ImGuiRender();
 			}
 		}
+	}
+
+	{
+		ImGui::Begin("Statistics");
+		auto stats = Hazel::Renderer2D::GetStats();
+		ImGui::Text("Renderer2D Stats:");
+		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+		ImGui::Text("Quads: %d", stats.QuadCount);
+		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		ImGui::Text("Textures: %d", stats.TextureCount);
+		float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
+		float averageFPS = 1.0f / averageRenderTime;
+		ImGui::Text("Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
+		ImGui::End();
 	}
 }
 #endif
