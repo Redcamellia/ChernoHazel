@@ -221,6 +221,8 @@ namespace Hazel {
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
+
+			s_Data.Stats.TextureCount++;
 		}
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
