@@ -59,7 +59,7 @@ static std::vector<LevelDefinition> levelDefinition = {
 	"Wr....r.w..r..r.w... . rw.......wr...r.W"
 	"W.r.....w...r...w... . rw.......w r..r.W"
 	"Wwwwwwwwwwwwwwwwwwww wwwwwwwwwwwwwwwwwwW"
-	"Wr.  q..w....r.rw... ...w.rd..r.w......W"
+	"Wr.  F..w....r.rw... ...w.rd..r.w......W"
 	"W.....r.wr......w..d ...w ..r...w.r.rr.W"
 	"W                                      W"
 	"Wd.. .r.wr....r.w.r. ..rw.r.r...w......W"
