@@ -30,6 +30,7 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 
 	// Render
 	Hazel::Renderer2D::ResetStats();
+	Hazel::Renderer2D::StatsBeginFrame();
 	{
 		HZ_PROFILE_SCOPE("Renderer Prep");
 		Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -59,6 +60,7 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 			}
 		}
 		Hazel::Renderer2D::EndScene();
+		Hazel::Renderer2D::StatsEndFrame();
 	}
 }
 
@@ -74,6 +76,10 @@ void Sandbox2D::OnImGuiRender()
 	ImGui::Text("Quads: %d", stats.QuadCount);
 	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+	ImGui::Text("Textures: %d", stats.TextureCount);
+	float averageRenderTime = stats.TotalFrameRenderTime / stats.FrameRenderTime.size(); // nb: wont be accurate until we have gathered at least stats.FrameRenderTime().size() results
+	float averageFPS = 1.0f / averageRenderTime;
+	ImGui::Text("Average frame render time: %8.5f (%5.0f fps)", averageRenderTime, averageFPS);
 
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 	ImGui::End();
