@@ -67,7 +67,8 @@ enum class Tile {
 	DiamondExplode2,
 	DiamondExplode3,
 	DiamondExplode4,
-	Amoeba0,
+	AmoebaFirst,
+	Amoeba0 = AmoebaFirst,
 	Amoeba1,
 	Amoeba2,
 	Amoeba3,
@@ -75,6 +76,7 @@ enum class Tile {
 	Amoeba5,
 	Amoeba6,
 	Amoeba7,
+	AmoebaLast = Amoeba7,
 	FireflyFirst,
 	Firefly0 = FireflyFirst,
 	Firefly1,
@@ -117,6 +119,10 @@ inline bool IsSolid(Tile tile) {
 
 inline bool IsPlayer(Tile tile) {
 	return (tile == Tile::PlayerIdle) || ((tile >= Tile::PlayerFirst) && (tile <= Tile::PlayerLast));
+}
+
+inline bool IsAmoeba(Tile tile) {
+	return ((tile >= Tile::AmoebaFirst) && (tile <= Tile::AmoebaLast));
 }
 
 inline bool IsButterfly(Tile tile) {

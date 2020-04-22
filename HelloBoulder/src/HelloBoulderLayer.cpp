@@ -1,4 +1,5 @@
 #include "HelloBoulderLayer.h"
+#include "Amoeba.h"
 #include "Boulder.h"
 #include "Diamond.h"
 #include "Player.h"
@@ -137,6 +138,54 @@ static std::vector<LevelDefinition> levelDefinition = {
 	"W......................................W"
 	"W......................................W"
 	"W.....................................XW"
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	},
+	{ 40, 22, 4, 150,
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	"Wwwwwwwwww....r.r..r........r.wwwwwwwwwW"
+	"W         ...........r....r...         W"
+	"W  dF     ..r..........r...r..     Fd  W"
+	"Wwwwwwwwww..r........r......r.wwwwwwwwwW"
+	"W         ......r...r.......r.         W"
+	"W  dF     ....r......r.rr.....     Fd  W"
+	"Wwwwwwwwww.rr........r.rr.....wwwwwwwwwW"
+	"W         ....r.r....r..r.....         W"
+	"W  dF     ....r.r....r..r..r..     Fd  W"
+	"Wwwwwwwwww.rr.r..r....r...r...wwwwwwwwwW"
+	"W         .rr.r..r............         W"
+	"W  dF     ....r..r........r...     Fd  W"
+	"Wwwwwwwwww.....r...r....r..r..wwwwwwwwwW"
+	"W....r.r..r........r.....r............rW"
+	"W......r....r....r..r.r...r..r.........W"
+	"W..r....r.....r...r.......r..r.........W"
+	"W..r........r......r.rr.........r......W"
+	"Wr.X...r...........r.rr.........rr..r.PW"
+	"W....r......r.rr......r........r..r....W"
+	"Wrr.........r.rr.........r..r.r.r..r...W"
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	},
+	{40, 22, 15, 120,
+	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	"W. .. .rr..... ..r. X.... rr r..r. .  .W"
+	"W ..r. .. .  .... .r.r. ...  r..r.d.. .W"
+	"Wr.....  .F.  ... .r.r. ... wwwwwwwwwwwW"
+	"W.r.d... .  ...... ..rr..r.... . ... . W"
+	"Wwwwwwwwwwwww.r. .. r..   .... ...r....W"
+	"Wr. r...... ..r. ... ..r.  ..r.  F.....W"
+	"Wr. r...... .. r..r.... ...r......r.rr.W"
+	"W... ..r  ... ..r.  ..r.  ... ....r.rr.W"
+	"W... ..r. .r.... ...F......r.r..  r..r.W"
+	"W  .. r.... ..r.r.... .  .......  d.. .W"
+	"W. ... .. .  .. .  .....rr r..r. . r.. W"
+	"W.. d..r.r.... .  ......r  r..r. .  ...W"
+	"W.r.  ..r.  ... .r.r. ...  r.. .... ...W"
+	"W....  .r.  ... .r.r. .r. . r.. r.... .W"
+	"W.  .... ....  .. r r..r.... ...r... .rW"
+	"W..... .  .rr. ...  r.. .r... r..r.r...W"
+	"W r...... ..r. .r.... .  ..r.  r.......W"
+	"W r...... .. r..r.... ...r......r.rr...W"
+	"W. ..r. ... ..r.  .AA.  ... ....r.rr...W"
+	"W. .drF..r.... ...r......r.rF.....dr...W"
 	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	},
 	{ 40, 22, 10, 0,
@@ -306,6 +355,13 @@ void HelloBoulderLayer::OnImGuiRender() {
 		ImGui::End();
 		m_FixedTimestep = 1.0f / updateFPS;
 		m_ViewPort.SetCameraSpeed((1.0f / m_FixedTimestep) - 1.0f);
+	}
+
+	{
+		ImGui::Begin("Amoeba Stats");
+		ImGui::Text("Amoeba Count: %d", m_Level.GetAmoebaCount());
+		ImGui::Text("Amoeba Growth Potential: %d", m_Level.GetAmoebaPotential());
+		ImGui::End();
 	}
 
 	for (size_t row = 0; row < m_Level.GetHeight(); ++row) {

@@ -4,6 +4,7 @@
 
 #include <array>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -17,8 +18,6 @@ struct LevelDefinition {
 
 class Level {
 public:
-	Level();
-
 	void Init(const LevelDefinition& definition);
 
 	size_t GetWidth() const { return m_Width; }
@@ -42,23 +41,35 @@ public:
 
 	void Explode(size_t row, size_t col);
 
+	void GrowAmoeba(size_t row, size_t col);
+	void SolidifyAmoeba(const Tile solidifyTo);
+
 	int GetScoreRequired() { return m_ScoreRequired; }
 
 	int GetScore() { return m_Score; }
 	void IncreaseScore();
 
+#ifdef _DEBUG
+	size_t GetAmoebaCount();
+	size_t GetAmoebaPotential();
+#endif
+
 private:
-	size_t m_Width;
-	size_t m_Height;
-	size_t m_PlayerInitialRow;
-	size_t m_PlayerInitialCol;
-	size_t m_ExitRow;
-	size_t m_ExitCol;
+	size_t m_Width = 0;
+	size_t m_Height = 0;
+	size_t m_PlayerInitialRow = 1;
+	size_t m_PlayerInitialCol = 1;
+	size_t m_ExitRow = 2;
+	size_t m_ExitCol = 2;
 
 	std::vector<std::unique_ptr<GameObject>> m_Objects;
 	std::vector<bool> m_Updated;
 
-	int m_ScoreRequired;
-	int m_Score;
+	int m_ScoreRequired = 100;
+	int m_Score = 0;
+
+	size_t m_AmoebaCount = 0;
+	std::set<std::pair<size_t, size_t>> m_PotentialAmoebaPositions;
+
 
 };
